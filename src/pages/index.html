@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    Emulador
+    <canvas></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+    <script>
+        const WINDOW_WIDTH = 256;
+        const WINDOW_HEIGHT = 240;
+
+        const socket = io()
+        const canvas = document.querySelector('canvas')
+        const context = canvas.getContext('2d')
+
+        console.log({
+            context
+        })
+
+        let imageData = context.createImageData(WINDOW_WIDTH, WINDOW_HEIGHT)
+
+
+        socket.emit('joystick', 'pause')
+
+        socket.on('game', imageData => {
+            console.log({
+                imageData
+            })
+            context.putImageData(imageData, 0, 0)
+        })
+    </script>
+</body>
+
+</html>
